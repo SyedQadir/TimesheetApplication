@@ -1,0 +1,18 @@
+<%- include('partials/header') %>
+
+<% title %>
+<div class="container">
+
+<!-- Nested If starts below..  -->
+<% if(title == 'Home'){ %>
+	<center> <h1>Overview </h1></center>
+	<div class="row">
+		<div class="projectContainer">
+		</div>
+	</div>
+
+
+<%} if(title == 'Timesheet') { %>
+	<%- include('timesheet/calendar') %>
+<% } %>
+</div>

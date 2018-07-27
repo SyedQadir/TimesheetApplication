@@ -1,0 +1,36 @@
+<form >
+	<span style="color: green; margin-top: 0;"><b>Log hours</b></span>
+	<span class="dateSelected"></span>
+  <fieldset>
+    <div class="form-group">
+      	<label for="projectName">Select Project Name: </label>
+     	<select id="projectName" class="form-control selectpicker" data-live-search="true">
+     		<option data-tokens='0'>Select</option>
+     		<% for(var i=0; i < projects.length; i++) { %>
+			   <option value=<%= projects[i].get('id')%> > <%= projects[i].get('name') %> </option>
+			<% } %>
+        </select>
+    </div>
+
+    <div class="form-group">
+      	<label for="task">Select Task</label>
+    	<select id="task" class="form-control">
+    		<option>Select</option>
+    		<% for(var i=0; i < task.length; i++) { %>
+			   <option value=<%=task[i].get('id')%> ><%= task[i].get('taskname') %></option>
+			<% } %>	
+      	</select>
+    </div>
+
+    <div class="form-group">
+	  	<label class="control-label hours" for="inputSuccess">Hours</label>
+	  	<input type="text" class="form-control hours" id="hours">
+	</div>
+	<div class="form-group">
+	  <label for="comment">Comment:</label>
+	  <textarea class="form-control" rows="2" id="task_description"></textarea>
+	</div>
+
+    <button type="submit"  class="btn btn-primary addHours">Submit</button>
+  </fieldset>
+</form>

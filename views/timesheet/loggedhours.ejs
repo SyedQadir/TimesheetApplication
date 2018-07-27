@@ -1,0 +1,43 @@
+<div class="col-md-9 tableContainer">
+	<table style="width:100%">
+		<tr>
+			<th>Project Name</th>
+			<th>Task </th>
+			<th>Notes </th>
+			<th>Hours logged</th>
+		</tr>
+	<% for(var i=0; i < hours.length; i++) { %>
+		<tr id='<%=hours[i].get('id') %>' >
+			<td> <%= hours[i].get('project_name') %></td>
+			<td> <%= hours[i].get('taskname') %></td>
+		   	<td> <%= hours[i].get('task_description') %></td>
+		   	<td> <%= hours[i].get('hours') %></td>
+		</tr>
+	<% } %>
+	<% if(!hours.length) {%>
+	<tr><td colspan="4" style="text-align: center;"> No Hours logged for the day </td> </tr>
+	<% }%>
+	</table>	
+</div>
+
+
+<style>
+.tableContainer{
+	padding-top: 20px;
+}
+	table {
+	    font-family: arial, sans-serif;
+	    border-collapse: collapse;
+	    width: 100%;
+	}
+
+	td, th {
+	    border: 1px solid #dddddd;
+	    text-align: left;
+	    padding: 8px;
+	}
+
+	tr:nth-child(even) {
+	    background-color: #dddddd;
+	}
+</style>
