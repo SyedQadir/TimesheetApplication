@@ -18,7 +18,8 @@ exports.home = (req, res, next ) => {
 	if(sess.userid && sess.email) {
 		try{
 			res.render('main',{
-				'title': 'Home'
+				'title': 'Home',
+				'id': sess.userid
 			});
 		}catch(e){
 			console.log(e);
@@ -27,6 +28,7 @@ exports.home = (req, res, next ) => {
 	else {
 	    res.writeHead(302, {
 			"Location": "/login"
+
 		});
 		res.end();
 	}
@@ -50,7 +52,9 @@ exports.viewLoginPage = (req, res, next) => {
 
 exports.verifyLogin = (req, res, next) => {
 	sess = req.session;
+
 	userModel.records.verifyLogin(req.body).then(function(result){
+		console.log('Success verified user--------->');
 		sess.email = result.email;
 		sess.userid = result.id;
 		res.writeHead(302, {
@@ -68,7 +72,6 @@ exports.verifyLogin = (req, res, next) => {
 }
 
 exports.logout = (req, res, next) => {
-	console.log('log out tri');
 	req.session.destroy();
 	res.writeHead(302, {
 		"Location": "/login"

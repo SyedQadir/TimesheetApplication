@@ -8,35 +8,43 @@ var users = require('../controllers/users');
 var projects = require('../controllers/projects');
 var homeController = require('../controllers/home');
 var timesheetController = require('../controllers/timesheet');
-
+var webServices = require('../webservices/webservices');
 
 // router.use(sessionHandler.sessionExists);
+class Routingfunction{
 
+	constructor(app){
+		this.app = app;
+	}
 
+	route(){
+		this.app.get('/', homeController.home);
 
-/*task list*/
-router.get('/author', author.getAuthors);
+		/*task list*/
+		this.app.get('/author', author.getAuthors);
 
-/* User calls */
-router.get('/users', users.getAll);
-router.get('/users/create', users.create);
-router.get('/users/:id', users.getProjectsByUserId);
+		// /* User calls */
+		this.app.get('/users', users.getAll);
+		this.app.get('/users/create', users.create);
+		this.app.get('/users/:id', users.getProjectsByUserId);
 
-//  Home Call
-router.get('/', homeController.home);
+		// // Calendar operations goes here. 
+		this.app.get('/timesheet', timesheetController.loadCalendar);
 
-// Calendar operations goes here. 
-router.get('/timesheet', timesheetController.loadCalendar);
+		this.app.post('/hours', timesheetController.addHours);
+		this.app.get('/hours', timesheetController.getHours);
 
+		this.app.get('/login', homeController.viewLoginPage);
+		this.app.post('/login', homeController.verifyLogin);   
 
-router.post('/hours', timesheetController.addHours);
-router.get('/hours', timesheetController.getHours);
+		this.app.post('/logout', homeController.logout);
+		this.app.get('/logout', homeController.logout);
+		
+		
+		// For rest Webservices
+		this.app.get('/rest/users/:id', webServices.getProjectsByUserId);
+	}
 
+}
 
-router.get('/login', homeController.viewLoginPage);
-router.post('/login', homeController.verifyLogin);   
-
-router.post('/logout', homeController.logout);
-router.get('/logout', homeController.logout);
-
-module.exports = router; 
+module.exports = Routingfunction;

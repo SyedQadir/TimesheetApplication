@@ -2,12 +2,12 @@ var connection = require('../db');
 var model = require('../model/record');
 var records = {
 
-	addHours: function(requestData){
+	addHours: function(requestData, userid){
 		
 
 		var date = records.generateDate(requestData.logging_date);
 		var query = "INSERT INTO hours(userid, logging_date, task_id, task_description, project_id, hours)"+
-		 "values("+requestData.userid+",'"+date+"',"+requestData.task_id+",'"+requestData.task_description +"',"+requestData.project_id+","+requestData.hours+")";
+		 "values("+userid+",'"+date+"',"+requestData.task_id+",'"+requestData.task_description +"',"+requestData.project_id+","+requestData.hours+")";
 
 		 
 
@@ -62,6 +62,7 @@ var records = {
 		var date = records.generateDate(date);
 		console.log('date ===='+date);
 
+
 		var query = "SELECT hours.*, projects.name as project_name, task.taskname as taskname FROM hours INNER JOIN task ON task.id=hours.task_id INNER JOIN projects on projects.id=hours.project_id WHERE logging_date='"+date+"' and userid=" + userid;
 		console.log(query);
 
@@ -69,7 +70,7 @@ var records = {
 			connection.connection.query(query,function(err, result){
 				if(err){
 					reject(err);
-				}
+				} 
 				var resultList = []; 
 				for(var i=0; i < result.length; i++){
 					resultList.push(new model.recordModel(result[i]));
