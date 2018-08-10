@@ -1,10 +1,10 @@
 <div class="row">
 	<div class='projectDetails col-md-4 col-sm-offset-7' data-project='false'>
-		<h3> Active project of <b><%= model[0].get('name') %></b></h3>
+		<h3> Active project </b></h3>
 		<table>
 			<% for(var i=0; i < model.length; i++) { %>
 			 	<tr>
-			    	<td><b><%= model[i].get('projectName') %></b> - <%= model[i].get('description') %></td>
+			    	<td><b><%= model[i].get('name') %></b> - <%= model[i].get('description') %></td>
 			    </tr>
 			<% } %>
 		</table>

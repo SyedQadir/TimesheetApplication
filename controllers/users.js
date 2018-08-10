@@ -26,8 +26,9 @@ exports.createUser = (req, res, next) => {
 
 exports.getProjectsByUserId = (req, res, next) => {
 	var response = res;
+	sess = req.session;
 	//TODO replace the user id below. 
-	userModel.records.getProjectsByUserId(1).then(function(result){
+	userModel.records.getProjectsByUserId(sess.userid).then(function(result){
 		if(result){
 			response.render('projects/activeprojects', {'model':result});
 		}

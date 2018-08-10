@@ -8,6 +8,7 @@ var promise = require('promise');
 exports.loadCalendar = (req, res, next) => {
 
 	var params = req.query;
+	sess = req.session;
 	
 	var request = req;
 	var response = res;
@@ -22,7 +23,9 @@ exports.loadCalendar = (req, res, next) => {
 					res.render('main', {
 						'title': 'Timesheet',
 						'task': tasks,
-						'projects': result
+						'projects': result,
+						'id': sess.userid
+
 					});
 				}else{
 					res.send('Ajax operation');	
@@ -33,19 +36,19 @@ exports.loadCalendar = (req, res, next) => {
 		
 	}).catch(function(err){
 		console.log(err);
-		s.send('<p> Something went wrong </p>');
+		res.send('<p> Something went wrong </p>');
 	});
 
 
 }
 
 exports.addHours = (req, res, next) => {
-
 	var requestData = req.body;
-	hoursModel.records.addHours(requestData).then(function(result){
+	
+	hoursModel.records.addHours(requestData, req.session.userid).then(function(result){
 		res.send('successfully added');
 	}).catch(function(err){
-		console.log('Error while adding hours. '+ err)
+		res.send('Error while adding hours. '+ err)
 		// throw(err);
 	});
 
@@ -53,15 +56,15 @@ exports.addHours = (req, res, next) => {
 
 exports.getHours = (req, res, next) => {
 	var requestData = req.query;
-	
+	sess = req.session; 
 	var response = res;
 	// TODO: 1 is user id  below.. Need to replace this. 
-	hoursModel.records.getHours(requestData.date, 1).then(function(result){
+	hoursModel.records.getHours(requestData.date, sess.userid).then(function(result){
 		
 		response.render('timesheet/loggedhours', {
 			'hours': result
 		});
 	}).catch(function(err){
-
+		res.send('Invalid user. Please login. ');
 	});
 }

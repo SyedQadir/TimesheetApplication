@@ -8,5 +8,9 @@ class recordModel {
 		return this.record[key];
 	}
 
+	getAll(){
+		return this.record;
+	}
+
 }
 exports.recordModel = recordModel;
